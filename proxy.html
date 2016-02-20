@@ -8,13 +8,18 @@
   }
   var channelId = decodeURIComponent(window.location.search.slice(1));
   window.addEventListener('storage', function() {
-    window.parent.postMessage(window.localStorage.getItem(channelId), '*');
+    var data = JSON.parse(window.localStorage.getItem(channelId));
+    if (data.channelId !== channelId) {
+        return;
+    }
+    window.parent.postMessage(data.message, '*');
     window.localStorage.removeItem(channelId);
   });
   window.addEventListener('message', function(e) {
-    if (e.data.channelId !== channelId) {
-        return;
-    }
-    window.localStorage.setItem(channelId, e.data.message);
+    var data = {
+        channelId: channelId,
+        message: e.data
+    };
+    window.localStorage.setItem(channelId, JSON.stringify(data));
   });
 </script>
