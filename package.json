@@ -1,0 +1,28 @@
+{
+  "name": "tabs-channel",
+  "version": "0.1.0",
+  "description": "A channel between different tabs with different origins",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitkarpov/tabs-channel.git"
+  },
+  "keywords": [
+    "localstorage",
+    "tabs",
+    "channel",
+    "postmessage"
+  ],
+  "author": "Viktor Karpov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vitkarpov/tabs-channel/issues"
+  },
+  "homepage": "https://github.com/vitkarpov/tabs-channel#readme"
+}

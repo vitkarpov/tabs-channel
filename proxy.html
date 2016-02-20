@@ -1,0 +1,17 @@
+<script type="text/javascript">
+  /**
+   * Host this page by yourself, if needed.
+   * You should specify its origin and path for a new channel.
+   */
+  if (!window.localStorage) {
+    throw new Error('TabsChannel.js works only in modern browsers');
+  }
+  var id = window.location.search.slice(1);
+  window.addEventListener('storage', function() {
+    window.parent.postMessage(window.localStorage.getItem(id), '*');
+    window.localStorage.removeItem(id);
+  });
+  window.addEventListener('message', function(e) {
+    window.localStorage.setItem(id, e.data);
+  });
+</script>
