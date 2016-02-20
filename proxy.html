@@ -8,12 +8,11 @@
   }
   var channelId = decodeURIComponent(window.location.search.slice(1));
   window.addEventListener('storage', function() {
-    var data = JSON.parse(window.localStorage.getItem(channelId));
-    if (data.channelId !== channelId) {
-        return;
+    var data = JSON.parse(window.localStorage.getItem(channelId)) || {};
+    if (data.channelId === channelId) {
+        window.parent.postMessage(data.message, '*');
+        window.localStorage.removeItem(channelId);
     }
-    window.parent.postMessage(data.message, '*');
-    window.localStorage.removeItem(channelId);
   });
   window.addEventListener('message', function(e) {
     var data = {
