@@ -6,8 +6,7 @@
 </head>
 <body>
     <h1>C.com needs to get a message from A.com, the same as B.com does</h1>
-    <div id="console"></div>
-    <script type="text/javascript" src="https://rawgit.com/vitkarpov/tabs-channel/master/lib/index.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/vitkarpov/tabs-channel/master/lib/index.js"></script>
     <script type="text/javascript">
         /**
          * Create a new channel between A.com and C.com
@@ -17,7 +16,12 @@
             id: 'a<->c'
         });
         channel.onReceive = function(message) {
-            document.getElementById('console').innerText = message;
+            if (window.callPhantom) {
+                window.callPhantom({
+                    message: message,
+                    page: 'c'
+                });
+            }
         };
     </script>
 </body>
