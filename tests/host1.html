@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabs Channel Test: A.com</title>
+</head>
+<body>
+    <h1>A.com needs to send a message to B.com</h1>
+    <button id="send">Say hi!</button>
+    <script type="text/javascript" src="../lib/index.js"></script>
+    <script type="text/javascript">
+        /**
+         * Create a new channel between A.com and B.com
+         * @type {TabsChannel}
+         */
+        var channelAB = new TabsChannel({
+            id: 'a<->b'
+        });
+        /**
+         * Create a new channel between A.com and C.com
+         * @type {TabsChannel}
+         */
+        var channelAC = new TabsChannel({
+            id: 'a<->c'
+        });
+        document.getElementById('send').addEventListener('click', function() {
+            channelAB.send('hello, B! It`s A!');
+            channelAC.send('hello, C! It`s A!');
+        });
+    </script>
+</body>
+</html>
