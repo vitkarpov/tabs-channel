@@ -6,12 +6,15 @@
   if (!window.localStorage) {
     throw new Error('TabsChannel.js works only in modern browsers');
   }
-  var id = window.location.search.slice(1);
+  var channelId = window.location.search.slice(1);
   window.addEventListener('storage', function() {
-    window.parent.postMessage(window.localStorage.getItem(id), '*');
-    window.localStorage.removeItem(id);
+    window.parent.postMessage(window.localStorage.getItem(channelId), '*');
+    window.localStorage.removeItem(channelId);
   });
   window.addEventListener('message', function(e) {
-    window.localStorage.setItem(id, e.data);
+    if (e.data.channelId !== channelId) {
+        return;
+    }
+    window.localStorage.setItem(channelId, e.data.message);
   });
 </script>
