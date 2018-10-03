@@ -7,12 +7,25 @@
     throw new Error('TabsChannel.js works only in modern browsers');
   }
   var channelId = decodeURIComponent(window.location.search.slice(1));
-  window.addEventListener('storage', function() {
+  window.addEventListener('storage', function(data) {
+    /** There is a race condition in the below that delete the value from localstore 
+    * before it get read by the other tab
+    *
     var data = JSON.parse(window.localStorage.getItem(channelId)) || {};
     if (data.channelId === channelId) {
         window.parent.postMessage(data.message, '*');
         window.localStorage.removeItem(channelId);
     }
+    *
+    * The below code solves the problem
+    */
+     if (data.key === channelId) {
+        var data = JSON.parse(data.newValue) || {};
+        if (data.channelId === channelId) {
+            window.parent.postMessage(data.message, '*');
+            window.localStorage.removeItem(channelId);
+        }
+     }
   });
   window.addEventListener('message', function(e) {
     var data = {
